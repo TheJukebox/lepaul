@@ -1,6 +1,6 @@
 lepaul
 ======
-##*A simple scraper that downloads imgur albums.*
+## *A simple scraper that downloads imgur albums.*
 
 lepaul is a program that fetches images from imgur album links and downloads them into a convenient folder wherever you run the script.
 
