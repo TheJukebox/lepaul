@@ -50,7 +50,7 @@ def main():
     usage="lepaul.py -u \"http://www.imgur.com/babpls\" -h --help"
     usageHelp="""
     lepaul is a python script for grabbing images from an imgur album.
-    Simply provide it with an imgur albim url and it'll do the rest for you!
+    Simply provide it with an imgur album url and it'll do the rest for you!
     by the jukebox
 
     Commands
