@@ -19,7 +19,7 @@ def albumDL(albumURL):
         try:
             req
             albumData=BeautifulSoup(res,'html.parser')
-            albumTitle=albumData.title.string
+            albumTitle=albumData.title.string[:-17]
             try:
                 os.mkdir(albumTitle.lstrip())
                 os.chdir(albumTitle.lstrip())
