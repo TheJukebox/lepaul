@@ -47,7 +47,7 @@ def main():
     """Handles user input and prints help/usage info."""
     
     global urlError
-    usage="lepaul.py -u \"http://www.imgur.com/babpls\" -h --help"
+    usage="lepaul.py -u \"http://www.imgur.com/a/babpls\" -h --help"
     usageHelp="""
     lepaul is a python script for grabbing images from an imgur album.
     Simply provide it with an imgur album url and it'll do the rest for you!

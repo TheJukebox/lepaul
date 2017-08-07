@@ -1,6 +1,8 @@
 lepaul
 ======
-## *A simple scraper that downloads imgur albums.*
+## *A simple python 3 scraper that downloads imgur albums.*
+
+Requires Beautiful Soup 4!
 
 lepaul is a program that fetches images from imgur album links and downloads them into a convenient folder wherever you run the script.
 
