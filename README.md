@@ -18,9 +18,11 @@ Usage:
 ## Requirements
 
 *Python 3*
+
 https://www.python.org/downloads/
 
 *Beautiful Soup 4*
+
 https://www.crummy.com/software/BeautifulSoup/
 
 Installing BS4 using pip:
