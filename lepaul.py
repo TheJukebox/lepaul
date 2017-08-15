@@ -7,46 +7,54 @@ import os
 
 urlError="[*] Invalid URL! You need to point lepaul to a valid imgur album URL."
 
-def imgurDL(albumURL):
-    """Downloads imgur albums."""
-    
+def imgurWrite(images):
+    """Writes the data collected in the imgurParse function."""
+
+    imgNum=1
+    for i in images:
+        fileName=str("image-{}.png").format(imgNum)    
+        imgNum=imgNum+1
+        f=open(fileName,'wb')
+        f.write(urllib.request.urlopen(i).read())
+        f.close()
+        print("#",i,"has been successfully downloaded.")
+
+def imgurParse(albumURL):
+    """Parses the html for use in the imgurWrite function."""
+
     global urlError
-    imgNum=0
+    # there's probably a better name for this list
+    images=[]
     
-    # make sure we can handle an exception from a bad URL or input.
     try:
         req=urllib.request.Request(albumURL)
         res=urllib.request.urlopen(req)
-        # finally we get to scrape and
-        # extract what we need
+        # here we scrape and extract
+        # whatever we need
         try:
             req
             albumData=BeautifulSoup(res,'html.parser')
-            albumTitle=albumData.title.string[:-17]
+            albumTitle=albumData.title.string[:-17].lstrip()
+            # try to create a directory based on the album's title
             try:
-                os.mkdir(albumTitle.lstrip())
-                os.chdir(albumTitle.lstrip())
-                print("Folder \""+albumTitle.lstrip()+"\" created.")
-                for image in albumData.find_all('img'):
-                    getURL=image.get('src')
-                    imgURL="//i.imgur.com/"
-                    imgNum=imgNum+1
-                    # make sure we're only grabbing the images
-                    # we want and not ads or buttons on the page.
-                    if imgURL in getURL:
-                        newURL=str("http:"+getURL)
-                        fileName=str('image-{}.png').format(imgNum)
-                        f=open(fileName,'wb')
-                        f.write(urllib.request.urlopen(newURL).read())
-                        f.close()
-                        print(newURL,"has been successfully downloaded.")
+                os.mkdir(albumTitle)
+                print("Folder \""+albumTitle+"\" created.")
+                os.chdir(albumTitle)
             except FileExistsError:
-                print("You already have an album by this name!") 
+                print("[*] You already have an album or folder by this name!")
+            # this for loop gathers the images and compiles them into
+            # a list called images if they're what we're looking for
+            for img in albumData.find_all('img'):
+                getURL=img.get('src')
+                imgURL="//i.imgur.com/"
+                if imgURL in getURL:
+                    newURL=str("http:"+getURL)
+                    images.append(newURL)
+            imgurWrite(images)
         except urllib.error.HTTPError:
-            print(urlError)
+            print(urlError) 
     except (urllib.error.URLError,ValueError):
-        print(urlError)
-    
+        print(urlError) 
 
 def main():
     """Handles user input and prints help/usage info."""
@@ -76,7 +84,7 @@ def main():
             # getting an imgur album
             try:
                 if str("imgur.com/a/") in sys.argv[2]:
-                    imgurDL(sys.argv[2])
+                    imgurParse(sys.argv[2])
                 else:
                     print(urlError)
             except IndexError:
